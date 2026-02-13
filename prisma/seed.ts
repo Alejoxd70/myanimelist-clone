@@ -6,6 +6,10 @@ type JikanFilter = 'airing' | 'favorite' | '';
 
 let animeCount = 1
 
+interface JikanAnimeGenre {
+  mal_id: number;
+  name: string;
+}
 
 async function seedPage(filter: JikanFilter, page: number) {
 
@@ -17,7 +21,7 @@ async function seedPage(filter: JikanFilter, page: number) {
   for (const item of json.data) {
     // uspsert genres 
     const genreRecords = await Promise.all(
-      (item.genres ?? []).map((g) =>
+      (item.genres ?? []).map((g: JikanAnimeGenre) =>
         prisma.genre.upsert({
           where: { id: g.mal_id },
           update: {},
