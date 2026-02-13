@@ -1,5 +1,4 @@
 import Image from "next/image"
-import { AiringAnime } from "@/lib/api/anime"
 import {
   Card,
   CardHeader,

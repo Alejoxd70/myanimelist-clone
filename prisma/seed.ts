@@ -2,15 +2,13 @@ import prisma from "@/lib/prisma";
 
 const JIKAN = "https://api.jikan.moe/v4";
 
-import { Genre } from "@/lib/definitions";
-
 type JikanFilter = 'airing' | 'favorite' | '';
 
 let animeCount = 1
 
 
 async function seedPage(filter: JikanFilter, page: number) {
-  
+
   const res = await fetch(`${JIKAN}/top/anime?page=${page}&limit=25&filter=${filter}`);
   if (!res.ok) throw new Error(`JIKAN API error:  ${res.status + ' ' + res.statusText}`);
 
@@ -19,7 +17,7 @@ async function seedPage(filter: JikanFilter, page: number) {
   for (const item of json.data) {
     // uspsert genres 
     const genreRecords = await Promise.all(
-      (item.genres ?? []).map((g: Genre) =>
+      (item.genres ?? []).map((g) =>
         prisma.genre.upsert({
           where: { id: g.mal_id },
           update: {},
