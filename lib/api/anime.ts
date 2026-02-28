@@ -5,11 +5,17 @@ const airingAnimeSelect = {
   id: true,
   title: true,
   imageUrl: true,
+  genres: true,
+  type: true,
+  score: true,
+  episodes: true,
+  status: true,
 } satisfies Prisma.AnimeSelect;
 
-export type AiringAnime = Prisma.AnimeGetPayload<{ select: typeof airingAnimeSelect }>;
+export type AnimeInfoSelect = Prisma.AnimeGetPayload<{ select: typeof airingAnimeSelect }>;
 
-export async function getTopAiringAnime(): Promise<AiringAnime[]> {
+// Get Top Airing Anime
+export async function getTopAiringAnime(): Promise<AnimeInfoSelect[]> {
   try {
     const data = await prisma.anime.findMany({
       where: {
@@ -19,8 +25,8 @@ export async function getTopAiringAnime(): Promise<AiringAnime[]> {
         score: 'desc'
       },
       select: airingAnimeSelect,
-      take: 25,
-      cacheStrategy: { ttl: 60 }
+      take: 6,
+      cacheStrategy: { ttl: 60 },
     })
 
     return data;
@@ -28,4 +34,24 @@ export async function getTopAiringAnime(): Promise<AiringAnime[]> {
     console.error('Error fetching anime: ', error);
     throw error;
   }
-} 
+}
+
+export async function getTopAllTimeAnime(): Promise<AnimeInfoSelect[]> {
+  try {
+    const data = await prisma.anime.findMany({
+      orderBy: {
+        score: 'desc'
+      },
+      select: airingAnimeSelect,
+      take: 6,
+      cacheStrategy: { ttl: 60 },
+    })
+
+    return data;
+  } catch (error) {
+    console.error('Error fetching anime: ', error)
+    throw error;
+  }
+}
+
+

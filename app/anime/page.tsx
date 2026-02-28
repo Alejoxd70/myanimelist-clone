@@ -6,6 +6,6 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <h1>Anime</h1>
+    <h1>Anime fasfasdf</h1>
   )
 }

@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
-import { Noto_Sans } from "next/font/google";
+import { Montserrat } from "next/font/google";
 import { ThemeProvider } from "@/app/providers";
-import "./globals.css";
 import { NavBar } from "@/components/custom/nav-bar";
+import { Footer } from "@/components/custom/footer";
+import "./globals.css";
 
-const notoSans = Noto_Sans({ variable: '--font-sans' });
+const montSerrat = Montserrat({ variable: '--font-sans' })
 
 
 export const metadata: Metadata = {
-  title: {default: "MyAnimeList Clone", template: "%s | MyAnimeList Clone"},
+  title: { default: "MyAnimeList Clone", template: "%s | MyAnimeList Clone" },
   description: "Just a project to practice Next.js",
 };
 
@@ -20,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${notoSans.variable}  antialiased`}
+        className={`${montSerrat.variable} antialiased flex min-h-svh flex-col`}
       >
         <ThemeProvider
           attribute="class"
@@ -29,9 +30,10 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <NavBar />
-          <div className="w-full p-2 md:p-3 lg:w-8/9 xl:w-7/9 mx-auto border border-primary">
+          <main className="flex-1 w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-10 py-6">
             {children}
-          </div>
+          </main>
+          <Footer />
         </ThemeProvider>
       </body>
     </html>
