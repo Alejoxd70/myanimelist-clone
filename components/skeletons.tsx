@@ -14,7 +14,7 @@ export const AnimeCardSkeletonGrid = () => {
   )
 }
 
-export const AnimeCardSkeleton = () => {
+const AnimeCardSkeleton = () => {
   return (
     <Card className="w-full overflow-hidden">
       <Skeleton className="aspect-2/3 w-full" />
