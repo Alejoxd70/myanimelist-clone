@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import { ThemeProvider } from "@/app/providers";
-import { NavBar } from "@/components/custom/nav-bar";
-import { Footer } from "@/components/custom/footer";
+import { NavBar } from "@/components/layout/nav-bar";
+import { Footer } from "@/components/layout/footer";
 import "./globals.css";
+import { Toaster } from "@/components/ui/sonner";
+import { LoginModalProvider } from "./context/login-modal-context";
 
 const montSerrat = Montserrat({ variable: '--font-sans' })
 
@@ -29,11 +31,14 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <NavBar />
-          <main className="flex-1 w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-10 py-6">
-            {children}
-          </main>
-          <Footer />
+          <LoginModalProvider>
+            <NavBar />
+            <main className="flex-1 w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-10 py-6">
+              {children}
+            </main>
+            <Footer />
+          </LoginModalProvider>
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>

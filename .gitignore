@@ -12,6 +12,8 @@
 
 # development
 /.agents
+CLAUDE.md
+.vscode
 
 # testing
 /coverage

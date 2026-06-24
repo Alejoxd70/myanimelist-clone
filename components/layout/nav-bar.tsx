@@ -1,10 +1,11 @@
 'use client'
-
 import { useState } from "react"
 import Link from "next/link"
-import { ModeToggle } from "../theme-toggle"
+import { ModeToggle } from "@/components/layout/theme-toggle"
 import { Button, buttonVariants } from "@/components/ui/button"
 import { LogIn, List } from "lucide-react"
+import { useSession } from "@/lib/auth-client"
+import { LoginForm } from "@/components/features/login/login-form"
 import {
   Sheet,
   SheetContent,
@@ -13,6 +14,10 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "../ui/dropdown-menu"
+import { UserIcon, LogOutIcon } from "lucide-react"
+import { signOut } from "@/lib/auth-client"
+import { toast } from "sonner"
 
 const navLinks = [
   { name: "Anime", href: "/anime" },
@@ -21,6 +26,12 @@ const navLinks = [
 
 export function NavBar() {
   const [sheetOpen, setSheetOpen] = useState(false)
+  const { data: session } = useSession()
+
+  const handleSignOut = async () => {
+    await signOut()
+    toast.success("Signed out successfully")
+  }
 
   return (
     <header
@@ -49,13 +60,29 @@ export function NavBar() {
         <div className="hidden items-center gap-2 md:flex">
           <ModeToggle />
 
-          <Link
-            href="/login"
-            className={buttonVariants()}
-          >
-            Login
-            <LogIn data-icon="inline-end" />
-          </Link>
+          {session ?
+            (
+              <>
+                <DropdownMenu>
+                  <DropdownMenuTrigger render={<Button variant="outline">Welcome! {session.user.name}</Button>} />
+                  <DropdownMenuContent>
+                    <DropdownMenuItem>
+                      <UserIcon />
+                      Profile
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem
+                      variant="destructive"
+                      onClick={handleSignOut}
+                    >
+                      <LogOutIcon />
+                      Logout
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </>
+            ) :
+            <LoginForm />}
         </div>
 
         <div className="md:hidden">

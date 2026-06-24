@@ -3,6 +3,7 @@ import { AnimeCardSkeletonGrid } from "@/components/skeletons";
 import { AnimeCardGrid } from "@/components/features/anime/anime-card";
 import { getTopAiringAnime, getTopAllTimeAnime } from "@/lib/api/anime";
 
+
 export default async function Home() {
 
 
@@ -16,15 +17,14 @@ export default async function Home() {
           </span>
         </h1>
         <h2>Track, Discover, and Enjoy your favorite Anime and Manga </h2>
-
       </div>
 
-      <h2 className="font-bold uppercase mb-2">Top Airing Anime</h2>
+      <h2 className="font-semibold uppercase mb-2">Top Airing Anime</h2>
       <Suspense fallback={<AnimeCardSkeletonGrid />}>
         <AnimeCardGrid fetchFunction={getTopAiringAnime} />
       </Suspense>
 
-      <h2 className="font-bold uppercase mt-3 mb-2">Top All Time Anime</h2>
+      <h2 className="font-semibold uppercase mt-3 mb-2">Top All Time Anime</h2>
       <Suspense fallback={<AnimeCardSkeletonGrid />}>
         <AnimeCardGrid fetchFunction={getTopAllTimeAnime} />
       </Suspense>

@@ -1,3 +1,4 @@
+"use server"
 import prisma from '@/lib/prisma';
 import { Prisma } from '@/app/generated/prisma/client';
 
@@ -5,7 +6,7 @@ const airingAnimeSelect = {
   id: true,
   title: true,
   imageUrl: true,
-  genres: true,
+  genres: { select: { id: true, name: true } },
   type: true,
   score: true,
   episodes: true,
@@ -29,7 +30,7 @@ export async function getTopAiringAnime(): Promise<AnimeInfoSelect[]> {
       cacheStrategy: { ttl: 60 },
     })
 
-    return data;
+    return data
   } catch (error) {
     console.error('Error fetching anime: ', error);
     throw error;
