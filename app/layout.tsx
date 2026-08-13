@@ -1,24 +1,23 @@
-import type { Metadata } from "next";
-import { Montserrat } from "next/font/google";
-import { ThemeProvider } from "@/app/providers";
-import { NavBar } from "@/components/layout/nav-bar";
-import { Footer } from "@/components/layout/footer";
-import "./globals.css";
-import { Toaster } from "@/components/ui/sonner";
-import { LoginModalProvider } from "./context/login-modal-context";
+import type { Metadata } from 'next'
+import { Montserrat } from 'next/font/google'
+import { ThemeProvider } from '@/app/providers'
+import { NavBar } from '@/components/layout/nav-bar'
+import { Footer } from '@/components/layout/footer'
+import './globals.css'
+import { Toaster } from '@/components/ui/sonner'
+import { LoginModalProvider } from './context/login-modal-context'
 
 const montSerrat = Montserrat({ variable: '--font-sans' })
 
-
 export const metadata: Metadata = {
-  title: { default: "MyAnimeList Clone", template: "%s | MyAnimeList Clone" },
-  description: "Just a project to practice Next.js",
-};
+  title: { default: 'MyAnimeList Clone', template: '%s | MyAnimeList Clone' },
+  description: 'Just a project to practice Next.js',
+}
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
@@ -42,5 +41,5 @@ export default function RootLayout({
         </ThemeProvider>
       </body>
     </html>
-  );
+  )
 }

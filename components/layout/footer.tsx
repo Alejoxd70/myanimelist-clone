@@ -1,9 +1,9 @@
-import Link from "next/link"
-import { Separator } from "@/components/ui/separator"
+import Link from 'next/link'
+import { Separator } from '@/components/ui/separator'
 
 const footerLinks = [
-  { name: "Anime", href: "/anime" },
-  { name: "Manga", href: "/manga" },
+  { name: 'Anime', href: '/anime' },
+  { name: 'Manga', href: '/manga' },
 ]
 
 export function Footer() {
@@ -16,7 +16,7 @@ export function Footer() {
           </Link>
 
           <nav className="flex gap-4 text-sm text-muted-foreground">
-            {footerLinks.map((link) => (
+            {footerLinks.map(link => (
               <Link
                 key={link.name}
                 href={link.href}
@@ -31,7 +31,11 @@ export function Footer() {
         <Separator className="my-4" />
 
         <p className="text-center text-xs text-muted-foreground">
-          &copy; {new Date().getFullYear()} MyAnimeListClone
+          &copy;
+          {' '}
+          {new Date().getFullYear()}
+          {' '}
+          MyAnimeListClone
         </p>
       </div>
     </footer>

@@ -1,11 +1,11 @@
 'use client'
-import { useState } from "react"
-import Link from "next/link"
-import { ModeToggle } from "@/components/layout/theme-toggle"
-import { Button, buttonVariants } from "@/components/ui/button"
-import { LogIn, List } from "lucide-react"
-import { useSession } from "@/lib/auth-client"
-import { LoginForm } from "@/components/features/login/login-form"
+import { useState } from 'react'
+import Link from 'next/link'
+import { ModeToggle } from '@/components/layout/theme-toggle'
+import { Button, buttonVariants } from '@/components/ui/button'
+import { LogIn, List } from 'lucide-react'
+import { useSession } from '@/lib/auth-client'
+import { LoginForm } from '@/components/features/login/login-form'
 import {
   Sheet,
   SheetContent,
@@ -13,15 +13,15 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "@/components/ui/sheet"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "../ui/dropdown-menu"
-import { UserIcon, LogOutIcon } from "lucide-react"
-import { signOut } from "@/lib/auth-client"
-import { toast } from "sonner"
+} from '@/components/ui/sheet'
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '../ui/dropdown-menu'
+import { UserIcon, LogOutIcon } from 'lucide-react'
+import { signOut } from '@/lib/auth-client'
+import { toast } from 'sonner'
 
 const navLinks = [
-  { name: "Anime", href: "/anime" },
-  { name: "Manga", href: "/manga" },
+  { name: 'Anime', href: '/anime' },
+  { name: 'Manga', href: '/manga' },
 ]
 
 export function NavBar() {
@@ -30,7 +30,7 @@ export function NavBar() {
 
   const handleSignOut = async () => {
     await signOut()
-    toast.success("Signed out successfully")
+    toast.success('Signed out successfully')
   }
 
   return (
@@ -48,7 +48,7 @@ export function NavBar() {
         </div>
 
         <div className="hidden gap-5 md:flex">
-          {navLinks.map((link) => (
+          {navLinks.map(link => (
             <Link
               key={link.name}
               href={link.href}
@@ -60,29 +60,35 @@ export function NavBar() {
         <div className="hidden items-center gap-2 md:flex">
           <ModeToggle />
 
-          {session ?
-            (
-              <>
-                <DropdownMenu>
-                  <DropdownMenuTrigger render={<Button variant="outline">Welcome! {session.user.name}</Button>} />
-                  <DropdownMenuContent>
-                    <DropdownMenuItem>
-                      <UserIcon />
-                      Profile
-                    </DropdownMenuItem>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem
-                      variant="destructive"
-                      onClick={handleSignOut}
-                    >
-                      <LogOutIcon />
-                      Logout
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </>
-            ) :
-            <LoginForm />}
+          {session
+            ? (
+                <>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger render={(
+                      <Button variant="outline">
+                        Welcome!
+                        {session.user.name}
+                      </Button>
+                    )}
+                    />
+                    <DropdownMenuContent>
+                      <DropdownMenuItem>
+                        <UserIcon />
+                        Profile
+                      </DropdownMenuItem>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem
+                        variant="destructive"
+                        onClick={handleSignOut}
+                      >
+                        <LogOutIcon />
+                        Logout
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </>
+              )
+            : <LoginForm />}
         </div>
 
         <div className="md:hidden">
@@ -97,7 +103,7 @@ export function NavBar() {
               </SheetHeader>
               <div className="mx-10 w-full flex">
                 <nav className="flex flex-col gap-4 mt-4">
-                  {navLinks.map((link) => (
+                  {navLinks.map(link => (
                     <Link
                       key={link.name}
                       href={link.href}
@@ -114,7 +120,9 @@ export function NavBar() {
                   className={buttonVariants()}
                   onClick={() => setSheetOpen(false)}
                 >
-                  Login <LogIn />
+                  Login
+                  {' '}
+                  <LogIn />
                 </Link>
               </SheetFooter>
             </SheetContent>
@@ -122,6 +130,6 @@ export function NavBar() {
         </div>
       </nav>
 
-    </header >
+    </header>
   )
 }

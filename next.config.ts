@@ -1,10 +1,10 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
   /* config options here */
   images: {
-    remotePatterns: [new URL('https://cdn.myanimelist.net/**')]
-  }
-};
+    remotePatterns: [new URL('https://cdn.myanimelist.net/**')],
+  },
+}
 
-export default nextConfig;
+export default nextConfig

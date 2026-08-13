@@ -151,9 +151,9 @@ model Review {
   user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
   anime Anime @relation(fields: [animeId], references: [id], onDelete: Cascade)
 
+  @@unique([userId, animeId])
   @@index([userId])
   @@index([animeId])
-  @@index([userId, animeId])
   @@map("review")
 }
 

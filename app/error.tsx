@@ -1,18 +1,18 @@
 'use client'
 
-import { Button } from "@/components/ui/button"
-import { RefreshCcw } from "lucide-react"
-import { useRouter } from "next/navigation"
+import { Button } from '@/components/ui/button'
+import { RefreshCcw } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 interface ErrorProps {
   error: Error & { digest?: string }
   reset: () => void
 }
 
 export default function Error({ error, reset }: ErrorProps) {
-  const router = useRouter();
+  const router = useRouter()
   const handleReset = () => {
-    reset();
-    router.refresh();
+    reset()
+    router.refresh()
   }
   return (
     <div className="flex flex-col items-center justify-center py-32 text-center gap-4">
