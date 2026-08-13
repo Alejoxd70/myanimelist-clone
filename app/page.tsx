@@ -1,7 +1,7 @@
 import { Suspense } from 'react'
 import { AnimeCardSkeletonGrid } from '@/components/skeletons'
 import { AnimeCardGrid } from '@/components/features/anime/anime-card'
-import { fetchAnimeGeneralFunction } from '@/app/_actions/fetch-anime'
+import { fetchTopAiringAnime, fetchTopAllTimeAnime } from '@/app/_actions/fetch-anime'
 
 export default async function Home() {
   return (
@@ -19,21 +19,12 @@ export default async function Home() {
 
       <h2 className="font-semibold uppercase mb-2">Top Airing Anime</h2>
       <Suspense fallback={<AnimeCardSkeletonGrid />}>
-        <AnimeCardGrid
-          fetchFunction={() => fetchAnimeGeneralFunction({
-            where: { status: 'Currently Airing' },
-            orderBy: { score: 'desc' },
-          })}
-        />
+        <AnimeCardGrid fetchFunction={fetchTopAiringAnime} />
       </Suspense>
 
       <h2 className="font-semibold uppercase mt-3 mb-2">Top All Time Anime</h2>
       <Suspense fallback={<AnimeCardSkeletonGrid />}>
-        <AnimeCardGrid
-          fetchFunction={() => fetchAnimeGeneralFunction({
-            orderBy: { score: 'desc' },
-          })}
-        />
+        <AnimeCardGrid fetchFunction={fetchTopAllTimeAnime} />
       </Suspense>
     </>
   )
