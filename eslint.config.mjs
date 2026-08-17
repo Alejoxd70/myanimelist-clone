@@ -16,6 +16,11 @@ const eslintConfig = defineConfig([
     'app/generated/**',
     'components/ui/**',
   ]),
+  {
+    rules: {
+      'no-unused-vars': 'error',
+    },
+  },
 ])
 
 export default eslintConfig

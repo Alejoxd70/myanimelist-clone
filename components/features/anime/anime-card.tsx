@@ -5,7 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { AnimeInfoSelect } from '@/app/_actions/fetch-anime'
+import { AnimeInfoSelect } from '@/app/_data/fetch-anime'
 import Link from 'next/link'
 import { placeholderImage } from '@/lib/anime'
 

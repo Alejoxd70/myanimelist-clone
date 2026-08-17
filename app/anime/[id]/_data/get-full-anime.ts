@@ -26,13 +26,7 @@ const fullAnimeInfoSelect = {
 
 export type FullAnimeInfoSelect = Prisma.AnimeGetPayload<{ select: typeof fullAnimeInfoSelect }>
 
-/**
- * Wrapped in `cache()` so `generateMetadata` and the page body share a single
- * query per request — unlike `fetch`, Prisma does not dedupe on its own.
- *
- * Genuine database failures are left to propagate to the route's error
- * boundary; only a missing row is translated into a 404.
- */
+// prevent two database queries for the same anime ID with the help of cache()
 export const fetchFullAnimeById = cache(async (id: number): Promise<FullAnimeInfoSelect> => {
   const anime = await prisma.anime.findUnique({
     where: { id },

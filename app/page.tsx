@@ -1,7 +1,7 @@
 import { Suspense } from 'react'
 import { AnimeCardSkeletonGrid } from '@/components/skeletons'
 import { AnimeCardGrid } from '@/components/features/anime/anime-card'
-import { fetchTopAiringAnime, fetchTopAllTimeAnime } from '@/app/_actions/fetch-anime'
+import { fetchTopAiringAnime, fetchTopAllTimeAnime } from '@/app/_data/fetch-anime'
 
 export default async function Home() {
   return (
