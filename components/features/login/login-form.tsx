@@ -7,32 +7,32 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-import { Field, FieldError, FieldGroup, FieldLabel, FieldSeparator } from "@/components/ui/field"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import { LogIn } from "lucide-react"
-import { RegisterForm } from "@/components/features/login/register-form"
-import { useState } from "react"
-import { signIn } from "@/lib/auth-client"
-import { useForm } from "react-hook-form"
-import { LoginFormSchema } from "@/lib/validations/auth"
-import { LoginInput } from "@/lib/validations/auth"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useLoginModal } from "@/hooks/use-login-modal"
+} from '@/components/ui/dialog'
+import { Field, FieldError, FieldGroup, FieldLabel, FieldSeparator } from '@/components/ui/field'
+import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
+import { LogIn } from 'lucide-react'
+import { RegisterForm } from '@/components/features/login/register-form'
+import { useState } from 'react'
+import { signIn } from '@/lib/auth-client'
+import { useForm } from 'react-hook-form'
+import { LoginFormSchema } from '@/lib/validations/auth'
+import { LoginInput } from '@/lib/validations/auth'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useLoginModal } from '@/hooks/use-login-modal'
 
 export function LoginForm() {
-  const { loginOpen, switchToRegister, setLoginOpen } = useLoginModal();
+  const { loginOpen, switchToRegister, setLoginOpen } = useLoginModal()
 
-  const [dbError, setDbError] = useState<string | null>(null);
+  const [dbError, setDbError] = useState<string | null>(null)
   const {
     register,
     handleSubmit,
     reset,
-    formState: { errors, isSubmitting }
+    formState: { errors, isSubmitting },
   } = useForm<LoginInput>({
     resolver: zodResolver(LoginFormSchema),
-    mode: "onChange",
+    mode: 'onChange',
   })
 
   const onSubmit = async (values: LoginInput) => {
@@ -42,14 +42,14 @@ export function LoginForm() {
       password,
       fetchOptions: {
         onSuccess: () => {
-          setLoginOpen(false);
+          setLoginOpen(false)
         },
         onError: (ctx) => {
-          setDbError(ctx.error.message);
+          setDbError(ctx.error.message)
         },
       },
-    });
-    reset();
+    })
+    reset()
   }
 
   return (
@@ -57,17 +57,18 @@ export function LoginForm() {
       <Dialog
         open={loginOpen}
         onOpenChange={() => {
-          setLoginOpen(!loginOpen);
-          setDbError(null);
-          reset();
+          setLoginOpen(!loginOpen)
+          setDbError(null)
+          reset()
         }}
       >
-        <DialogTrigger render={
+        <DialogTrigger render={(
           <Button>
             Login
             <LogIn data-icon="inline-end" />
           </Button>
-        } />
+        )}
+        />
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Login</DialogTitle>
@@ -77,13 +78,13 @@ export function LoginForm() {
             <FieldGroup>
               <Field>
                 <FieldLabel htmlFor="email-login">Email</FieldLabel>
-                <Input {...register("email")} id="email-login" name="email" type="email" autoComplete="email" placeholder="Enter your email" required />
+                <Input {...register('email')} id="email-login" name="email" type="email" autoComplete="email" placeholder="Enter your email" required />
                 <FieldError>{errors?.email?.message}</FieldError>
               </Field>
 
               <Field>
                 <FieldLabel htmlFor="password-login">Password</FieldLabel>
-                <Input {...register("password")} id="password-login" name="password" type="password" autoComplete="current-password" placeholder="Enter your password" required />
+                <Input {...register('password')} id="password-login" name="password" type="password" autoComplete="current-password" placeholder="Enter your password" required />
                 <FieldError>{errors?.password?.message}</FieldError>
               </Field>
 
@@ -101,7 +102,7 @@ export function LoginForm() {
             Don&apos;t have an account? Register
           </Button>
         </DialogContent>
-      </Dialog >
+      </Dialog>
 
       {/* Register Form */}
       <RegisterForm />

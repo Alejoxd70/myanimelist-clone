@@ -1,19 +1,26 @@
-import { defineConfig, globalIgnores } from "eslint/config";
-import nextVitals from "eslint-config-next/core-web-vitals";
-import nextTs from "eslint-config-next/typescript";
+import { defineConfig, globalIgnores } from 'eslint/config'
+import nextVitals from 'eslint-config-next/core-web-vitals'
+import stylistic from '@stylistic/eslint-plugin'
 
 const eslintConfig = defineConfig([
   ...nextVitals,
-  ...nextTs,
+  stylistic.configs.recommended,
   // Override default ignores of eslint-config-next.
   globalIgnores([
     // Default ignores of eslint-config-next:
-    ".next/**",
-    "out/**",
-    "build/**",
-    "next-env.d.ts",
-    ".agents/**"
+    '.next/**',
+    'out/**',
+    'build/**',
+    'next-env.d.ts',
+    '.agents/**',
+    'app/generated/**',
+    'components/ui/**',
   ]),
-]);
+  {
+    rules: {
+      'no-unused-vars': 'error',
+    },
+  },
+])
 
-export default eslintConfig;
+export default eslintConfig

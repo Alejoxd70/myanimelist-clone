@@ -1,14 +1,14 @@
-import type { Metadata } from "next"
+import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: "Anime"
+  title: 'Anime',
 }
 
 export default function Page() {
-
   return (
     <>
-      <h1>Anime Page</h1>
+      <h1>Anime Pageeeeeee</h1>
+
     </>
   )
 }
