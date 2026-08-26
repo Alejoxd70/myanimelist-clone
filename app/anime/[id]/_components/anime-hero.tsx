@@ -2,6 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Star, Award, TrendingUp, ChevronRight } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
+import { Separator } from '@/components/ui/separator'
 import { formatSeasonYear, placeholderImage } from '@/lib/anime'
 import { HeroActions } from './hero-actions'
 import type { FullAnimeInfoSelect } from '@/app/anime/[id]/_data/get-full-anime'
@@ -23,14 +24,17 @@ function StatTile({ label, icon, children }: StatTileProps) {
         {icon}
         {label}
       </p>
-      <p className="mt-0.5 text-lg font-semibold leading-none tabular-nums">{children}</p>
+      <p className="mt-0.5 text-lg font-semibold leading-none tabular-nums">
+        {children}
+      </p>
     </div>
   )
 }
 
 export function AnimeHero({ anime }: AnimeHeroProps) {
-  const seasonYear = formatSeasonYear(anime.season, anime.year)
-  const hasStats = anime.score != null || anime.rank != null || anime.popularity != null
+  const { id, genres, imageUrl, score, rank, popularity, season, year, title, titleEnglish, episodes, status, titleJapanese, type } = anime
+  const seasonYear = formatSeasonYear(season, year)
+  const hasStats = score != null || rank != null || popularity != null
 
   return (
     // `bg-muted/40` keeps the banner readable as a distinct band even when the
@@ -38,13 +42,13 @@ export function AnimeHero({ anime }: AnimeHeroProps) {
     <section className="relative w-full overflow-hidden border-b border-border/50 bg-muted/40">
       {/* Backdrop — the poster art, blurred out into a cinematic wash */}
       <div className="absolute inset-0 z-0 select-none pointer-events-none">
-        {anime.imageUrl
+        {imageUrl
           ? (
               <Image
-                src={anime.imageUrl}
+                src={imageUrl}
                 alt=""
                 fill
-                className="object-cover object-top blur-3xl scale-125 saturate-150 opacity-70 dark:opacity-50"
+                className="object-cover object-top blur-3xl scale-125 saturate-150 opacity-60 dark:opacity-50"
                 sizes="100vw"
                 placeholder="blur"
                 blurDataURL={placeholderImage}
@@ -58,7 +62,7 @@ export function AnimeHero({ anime }: AnimeHeroProps) {
         <div className="absolute inset-0 bg-linear-to-b from-background/45 via-background/65 to-background" />
       </div>
 
-      {/* Content — restores the horizontal padding the page-level breakout removed */}
+      {/* Content restores the horizontal padding the page-level breakout removed */}
       <div className="relative z-10 max-w-6xl mx-auto px-6 sm:px-8 lg:px-10 pt-6 pb-10 lg:pt-8 lg:pb-12">
         <nav
           aria-label="Breadcrumb"
@@ -71,7 +75,7 @@ export function AnimeHero({ anime }: AnimeHeroProps) {
           {/* `min-w-0` lets the flex item shrink so `truncate` can engage — without
               it a long title forces the whole document wider than the viewport. */}
           <span className="min-w-0 truncate text-foreground/80" aria-current="page">
-            {anime.title}
+            {title}
           </span>
         </nav>
 
@@ -83,8 +87,8 @@ export function AnimeHero({ anime }: AnimeHeroProps) {
           >
             <div className="relative aspect-2/3 w-full rounded-xl overflow-hidden bg-muted shadow-xl ring-1 ring-foreground/10">
               <Image
-                src={anime.imageUrl || placeholderImage}
-                alt={anime.title}
+                src={imageUrl || placeholderImage}
+                alt={title}
                 fill
                 className="object-cover object-top"
                 priority
@@ -95,64 +99,64 @@ export function AnimeHero({ anime }: AnimeHeroProps) {
             </div>
           </div>
 
-          {/* Info */}
+          {/* Anime Info */}
           <div
             className="flex flex-col gap-3 min-w-0 flex-1 text-center sm:text-left animate-in fade-in slide-in-from-bottom-3 fill-mode-both motion-reduce:animate-none"
             style={{ animationDelay: '75ms', animationDuration: '400ms' }}
           >
-            {anime.titleJapanese && (
+            {titleJapanese && (
               <p className="text-muted-foreground text-sm tracking-wide line-clamp-1">
-                {anime.titleJapanese}
+                {titleJapanese}
               </p>
             )}
 
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight tracking-tight text-balance">
-              {anime.title}
+              {title}
             </h1>
 
-            {anime.titleEnglish && anime.titleEnglish !== anime.title && (
+            {titleEnglish && titleEnglish !== title && (
               <p className="text-muted-foreground text-sm sm:text-base -mt-1">
-                {anime.titleEnglish}
+                {titleEnglish}
               </p>
             )}
 
-            {/* Stat rail — the single owner of score / rank / popularity */}
+            {/* score / rank / popularity */}
             {hasStats && (
               <div className="mt-1 flex flex-wrap gap-2 justify-center sm:justify-start">
-                {anime.score != null && (
+                {score != null && (
                   <StatTile
                     label="Score"
                     icon={<Star className="size-3 text-primary fill-primary" aria-hidden />}
                   >
-                    {anime.score.toFixed(2)}
+                    {score.toFixed(2)}
                     <span className="ml-0.5 text-xs font-normal text-muted-foreground">/10</span>
                   </StatTile>
                 )}
-                {anime.rank != null && (
+                {rank != null && (
                   <StatTile
                     label="Ranked"
                     icon={<Award className="size-3 text-accent" aria-hidden />}
                   >
                     #
-                    {anime.rank.toLocaleString()}
+                    {rank.toLocaleString()}
                   </StatTile>
                 )}
-                {anime.popularity != null && (
+                {popularity != null && (
                   <StatTile
                     label="Popularity"
                     icon={<TrendingUp className="size-3 text-accent" aria-hidden />}
                   >
                     #
-                    {anime.popularity.toLocaleString()}
+                    {popularity.toLocaleString()}
                   </StatTile>
                 )}
               </div>
             )}
 
             {/* Genres — the only genre display on the page */}
-            {anime.genres.length > 0 && (
+            {genres.length > 0 && (
               <div className="flex flex-wrap gap-1.5 justify-center sm:justify-start">
-                {anime.genres.map(g => (
+                {genres.map(g => (
                   <Badge key={g.id} variant="secondary">
                     {g.name}
                   </Badge>
@@ -160,38 +164,42 @@ export function AnimeHero({ anime }: AnimeHeroProps) {
               </div>
             )}
 
-            {/* Glanceable meta line — the sidebar carries the precise version */}
+            {/* type / episodes / status / season */}
             <div className="flex flex-wrap gap-x-3 gap-y-1 text-sm text-muted-foreground items-center justify-center sm:justify-start">
-              {anime.type && (
-                <span className="text-foreground font-medium">{anime.type}</span>
+              {type && (
+                <span className="text-foreground font-medium">{type}</span>
               )}
-              {anime.episodes != null && (
-                <span>
-                  ·
-                  {' '}
-                  {anime.episodes}
-                  {' '}
-                  eps
-                </span>
+              {episodes != null && (
+                <>
+                  <Separator orientation="vertical" className="h-auto" />
+                  <span>
+                    {episodes}
+                    {' '}
+                    eps
+                  </span>
+                </>
               )}
-              {anime.status && (
-                <span>
-                  ·
-                  {' '}
-                  {anime.status}
-                </span>
+              {status && (
+                <>
+                  <Separator orientation="vertical" className="h-auto" />
+
+                  <span>
+                    {status}
+                  </span>
+                </>
               )}
               {seasonYear && (
-                <span>
-                  ·
-                  {' '}
-                  {seasonYear}
-                </span>
+                <>
+                  <Separator orientation="vertical" className="h-auto" />
+                  <span>
+                    {seasonYear}
+                  </span>
+                </>
               )}
             </div>
 
             <div className="mt-2">
-              <HeroActions animeId={anime.id} />
+              <HeroActions animeId={id} />
             </div>
           </div>
         </div>

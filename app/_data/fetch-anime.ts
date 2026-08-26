@@ -18,12 +18,7 @@ export type AnimeInfoSelect = Prisma.AnimeGetPayload<{ select: typeof shortAnime
 
 type AnimeListOptions = Pick<Prisma.AnimeFindManyArgs, 'where' | 'orderBy'>
 
-/**
- * Shared query body. Deliberately not exported: callers pick one of the named
- * wrappers below so no caller can widen `where` into a relation traversal
- * (`userEntries -> user -> email`), which would leak user data if this module
- * ever became reachable from the client.
- */
+// Shared query to avoid leaking user data
 async function fetchAnimeList(
   { where, orderBy }: AnimeListOptions,
   limit: number,
@@ -43,16 +38,27 @@ async function fetchAnimeList(
   }
 }
 
-/**
- * Wrapped in `cache()` so repeat calls within one request share a single query.
- * The argument must stay primitive — `cache` compares arguments with `Object.is`,
- * so an object literal built at the call site would miss the memo every time.
- */
+// Wrapped in cache() so repeat calls within one request share a single query
 export const fetchTopAiringAnime = cache((limit = 6): Promise<AnimeInfoSelect[]> =>
   fetchAnimeList(
-    { where: { status: 'Currently Airing' }, orderBy: { score: 'desc' } },
+    {
+      where: {
+        status: 'Currently Airing',
+      },
+      orderBy: {
+        score: 'desc',
+      },
+    },
     limit,
   ))
 
 export const fetchTopAllTimeAnime = cache((limit = 6): Promise<AnimeInfoSelect[]> =>
-  fetchAnimeList({ orderBy: { score: 'desc' } }, limit))
+  fetchAnimeList(
+    {
+      orderBy: {
+        score: 'desc',
+      },
+    },
+    limit,
+  ),
+)
