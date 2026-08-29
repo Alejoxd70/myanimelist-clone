@@ -49,7 +49,7 @@ export default async function AnimeDescription({ params }: PageProps) {
 
       <div className="max-w-6xl mx-auto py-8 lg:py-10">
         <div className="grid grid-cols-1 lg:grid-cols-[280px_minmax(0,1fr)] gap-8 lg:gap-10">
-          {/* Sidebar — below the synopsis on mobile, beside it from `lg` up */}
+          {/* Sidebar below the synopsis on mobile, beside it from `lg` up */}
           <div className="order-2 lg:order-1">
             <AnimeSidebar anime={anime} />
           </div>
