@@ -33,14 +33,16 @@ function InfoRow({
 /** Airing state as a colour, so the row reads at a glance. */
 function statusDotClass(status: string | null): string {
   const normalized = status?.toLowerCase() ?? ''
-  if (normalized.includes('currently') || normalized.includes('airing')) return 'bg-chart-3'
-  if (normalized.includes('not yet')) return 'bg-accent'
+  if (normalized.includes('currently')) return 'bg-chart-3'
+  if (normalized.includes('finished')) return 'bg-accent'
+  if (normalized.includes('not yet')) return 'bg-muted-foreground'
   return 'bg-muted-foreground'
 }
 
 export function AnimeSidebar({ anime }: AnimeSidebarProps) {
-  const aired = formatAiredRange(anime.startDate, anime.endDate)
-  const seasonYear = formatSeasonYear(anime.season, anime.year)
+  const { startDate, endDate, type, season, year, episodes, status } = anime
+  const aired = formatAiredRange(startDate, endDate, type)
+  const seasonYear = formatSeasonYear(season, year)
 
   return (
     <aside
@@ -53,15 +55,15 @@ export function AnimeSidebar({ anime }: AnimeSidebarProps) {
         </CardHeader>
         {/* Score, rank and popularity deliberately live in the hero's stat rail only */}
         <CardContent className="flex flex-col divide-y divide-border/60">
-          <InfoRow label="Type" value={anime.type} />
-          <InfoRow label="Episodes" value={anime.episodes} />
+          <InfoRow label="Type" value={type} />
+          <InfoRow label="Episodes" value={episodes} />
           <InfoRow
             label="Status"
-            value={anime.status}
+            value={status}
             icon={(
               <span
                 aria-hidden
-                className={cn('size-1.5 shrink-0 rounded-full', statusDotClass(anime.status))}
+                className={cn('size-1.5 shrink-0 rounded-full', statusDotClass(status))}
               />
             )}
           />

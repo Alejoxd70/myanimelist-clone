@@ -42,16 +42,14 @@ export default async function AnimeDescription({ params }: PageProps) {
 
   return (
     <>
-      {/* Cancels the root layout's `px-6 sm:px-8 lg:px-10 py-6` so the banner runs
-          edge to edge and sits flush under the sticky navbar. The hero restores
-          the horizontal padding on its own inner container. */}
+      {/* Cancels the root layout so the banner runs edge to edge and sits flush under the sticky navbar. */}
       <div className="-mx-6 sm:-mx-8 lg:-mx-10 -mt-6">
         <AnimeHero anime={anime} />
       </div>
 
       <div className="max-w-6xl mx-auto py-8 lg:py-10">
         <div className="grid grid-cols-1 lg:grid-cols-[280px_minmax(0,1fr)] gap-8 lg:gap-10">
-          {/* Sidebar — below the synopsis on mobile, beside it from `lg` up */}
+          {/* Sidebar below the synopsis on mobile, beside it from `lg` up */}
           <div className="order-2 lg:order-1">
             <AnimeSidebar anime={anime} />
           </div>

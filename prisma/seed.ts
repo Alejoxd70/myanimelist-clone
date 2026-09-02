@@ -1,6 +1,6 @@
 import prisma from '@/lib/prisma'
 
-const JIKAN = 'https://api.jikan.moe/v4'
+const JIKAN = 'https://api.jikan.moe/v4/top/anime'
 
 type JikanFilter = 'airing' | 'favorite' | ''
 
@@ -12,7 +12,8 @@ interface JikanAnimeGenre {
 }
 
 async function seedPage(filter: JikanFilter, page: number) {
-  const res = await fetch(`${JIKAN}/top/anime?page=${page}&limit=25&filter=${filter}`)
+  const res = await fetch(`${JIKAN}?filter=${filter}&page=${page}`)
+  console.log(res)
   if (!res.ok) throw new Error(`JIKAN API error:  ${res.status + ' ' + res.statusText}`)
 
   const json = await res.json()
@@ -75,7 +76,7 @@ async function main() {
   for (const filter of filters) {
     for (let page = 1; page <= 3; page++) {
       await seedPage(filter, page)
-      await new Promise(resolve => setTimeout(resolve, 1500))
+      await new Promise(resolve => setTimeout(resolve, 3000))
     }
   }
 

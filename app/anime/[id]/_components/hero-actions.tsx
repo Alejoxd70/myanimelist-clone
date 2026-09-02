@@ -6,7 +6,7 @@ import { useSession } from '@/lib/auth-client'
 import { useLoginModal } from '@/hooks/use-login-modal'
 
 interface HeroActionsProps {
-  /** Also the MyAnimeList id, so it doubles as the outbound link. */
+  /** MyAnimeList id, so link points to it */
   animeId: number
 }
 
@@ -49,8 +49,7 @@ export function HeroActions({ animeId }: HeroActionsProps) {
         <Share2 />
       </Button>
 
-      {/* A plain anchor with `buttonVariants` — Base UI's `Button` assumes a
-          native <button>, so an <a> in `render` trips its accessibility warning. */}
+      {/* A plain anchor with `buttonVariants` because external links */}
       <a
         href={`https://myanimelist.net/anime/${animeId}`}
         target="_blank"

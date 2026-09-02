@@ -2,11 +2,7 @@
 export const placeholderImage
   = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mN8/+F9PQAI8wNPvd7POQAAAABJRU5ErkJggg=='
 
-/**
- * Formats the raw `season` / `year` columns for display, e.g. `('WINTER', 2024)`
- * becomes `'Winter 2024'`. Returns `null` when neither value is known so callers
- * can skip rendering the row entirely.
- */
+// Formats the raw `season` / `year` columns for display,  e.g.  Winter 2024
 export function formatSeasonYear(season: string | null, year: number | null): string | null {
   const parts = [
     season ? season.charAt(0).toUpperCase() + season.slice(1).toLowerCase() : null,
@@ -16,7 +12,7 @@ export function formatSeasonYear(season: string | null, year: number | null): st
   return parts.length > 0 ? parts.join(' ') : null
 }
 
-/** `'2009-04-05T00:00:00+00:00'` becomes `'Apr 5, 2009'`. */
+// '2009-04-05T00:00:00+00:00' becomes 'Apr 5, 2009'
 function formatAiredDate(value: string | null): string | null {
   if (!value) return null
 
@@ -31,18 +27,21 @@ function formatAiredDate(value: string | null): string | null {
   })
 }
 
-/**
- * Formats the raw `startDate` / `endDate` columns into a display range, e.g.
- * `'Apr 5, 2009 – Jul 4, 2010'`. A still-airing show has no end date, so it
- * renders as `'Apr 5, 2009 – ?'`. Returns `null` when neither date is known.
- */
-export function formatAiredRange(startDate: string | null, endDate: string | null): string | null {
+// Formats the raw `startDate` / `endDate` columns into a display range
+export function formatAiredRange(startDate: string | null, endDate: string | null, type: string | null): string | null {
   const start = formatAiredDate(startDate)
   const end = formatAiredDate(endDate)
 
   if (!start && !end) return null
+
   if (!start) return end
+
+  // movie
+  if (!end && type?.toLocaleLowerCase() === 'movie') return start
+
+  // possible airing
   if (!end) return `${start} – ?`
 
+  // finished airing
   return `${start} – ${end}`
 }
